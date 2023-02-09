@@ -1,0 +1,29 @@
+name: multi-human-mocap
+channels:
+  - pytorch
+  - pytorch3d
+  - conda-forge
+  - defaults
+dependencies:
+  - conda
+  - python=3.7.10
+  - cudatoolkit
+  - torchvision
+  - pytorch=1.9.0
+  - pytorch3d
+  - pip
+  - pip:
+    - numpy==1.20.3
+    - scipy
+    - opencv-python
+    - opencv-contrib-python
+    - tqdm
+    - chumpy
+    - open3d
+    - ipython
+    - jupyterlab
+    - matplotlib
+    - pillow
+    - timm
+    - setuptools
+    - cython

@@ -1,0 +1,22 @@
+diff --git a/scripts/demo_inference.py b/scripts/demo_inference.py
+index a4958ca..a6a6be6 100644
+--- a/scripts/demo_inference.py
++++ b/scripts/demo_inference.py
+@@ -129,11 +129,16 @@ def check_input():
+         inputlist = args.inputlist
+         inputimg = args.inputimg
+ 
++        def is_image(fname):
++            if os.path.splitext(fname)[1] in ['.jpg', '.jpeg', '.JPG', '.png']:
++                return True
++            return False
++
+         if len(inputlist):
+             im_names = open(inputlist, 'r').readlines()
+         elif len(inputpath) and inputpath != '/':
+             for root, dirs, files in os.walk(inputpath):
+-                im_names = files
++                im_names = sorted(list(filter(is_image, files)))
+             im_names = natsort.natsorted(im_names)
+         elif len(inputimg):
+             args.inputpath = os.path.split(inputimg)[0]

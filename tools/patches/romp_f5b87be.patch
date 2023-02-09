@@ -1,0 +1,19 @@
+diff --git a/simple_romp/romp/utils.py b/simple_romp/romp/utils.py
+index 4aa001c..b518c9f 100755
+--- a/simple_romp/romp/utils.py
++++ b/simple_romp/romp/utils.py
+@@ -178,7 +178,13 @@ def collect_frame_path(video_path, save_path):
+         frame_save_dir = video_path
+ 
+     assert osp.isdir(frame_save_dir), frame_save_dir + 'is supposed to be a folder containing video frames.'
+-    frame_paths = [osp.join(frame_save_dir, frame_name) for frame_name in sorted(os.listdir(frame_save_dir))]
++
++    def is_image(fname):
++        if os.path.splitext(fname)[1] in ['.jpg', '.jpeg', '.JPG', '.png']:
++            return True
++        return False
++
++    frame_paths = [osp.join(frame_save_dir, frame_name) for frame_name in sorted(list(filter(is_image, os.listdir(frame_save_dir))))]
+     return frame_paths, video_save_path
+ 
+ #-----------------------------------------------------------------------------------------#

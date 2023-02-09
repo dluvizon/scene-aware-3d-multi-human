@@ -1,0 +1,28 @@
+demo/
+test/
+smpl/
+log/
+trained_models
+.vscode
+active_configs
+checkpoints
+notebooks/outputs
+output/
+
+# Datasets
+data/mupots-3d-eval
+
+# SMPL model
+model_data/parameters/SMPL_NEUTRAL.pkl
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.log
+*.mp4
+*.npz
+*.fbx
+*.zip
+
+# Jupyter stuff
+.ipynb_checkpoints

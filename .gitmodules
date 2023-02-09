@@ -1,0 +1,15 @@
+[submodule "tools/DPT"]
+	path = tools/DPT
+	url = https://github.com/isl-org/DPT.git
+	branch = f43ef9e
+[submodule "tools/AlphaPose"]
+	path = tools/AlphaPose
+	url = https://github.com/MVIG-SJTU/AlphaPose.git
+	branch = d97acd0
+[submodule "tools/Mask2Former"]
+	path = tools/Mask2Former
+	url = https://github.com/facebookresearch/Mask2Former.git
+	branch = 16c3bee
+[submodule "tools/ROMP"]
+	path = tools/ROMP
+	url = https://github.com/Arthur151/ROMP.git

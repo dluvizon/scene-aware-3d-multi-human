@@ -1,9 +1,9 @@
 # Scene-Aware 3D Multi-Human Motion Capture
 
 This software is released as part of the supplementary material of the paper:
-> **Scene-Aware 3D Multi-Human Motion Capture from a Single Camera**, [EUROGRAPHICS 2023](https://eg2023.saarland-informatics-campus.de/)
+> **Scene-Aware 3D Multi-Human Motion Capture from a Single Camera**, [EUROGRAPHICS 2023](https://eg2023.saarland-informatics-campus.de/)<br>
 ><a href="https://people.mpi-inf.mpg.de/~dluvizon" target="_blank">Diogo C. Luvizon</a> | <a href="https://people.mpi-inf.mpg.de/~mhaberma" target="_blank">Marc Habermann</a> |  <a href="https://people.mpi-inf.mpg.de/~golyanik" target="_blank">Vladislav Golyanik</a> | <a href="https://adamkortylewski.com" target="_blank">Adam Kortylewski</a> | <a href="http://people.mpi-inf.mpg.de/~theobalt" target="_blank">Christian Theobalt</a><br>
-> **Project**: <a href="https://vcai.mpi-inf.mpg.de/projects/scene-aware-3d-multi-human/" target="_blank">https://vcai.mpi-inf.mpg.de/projects/scene-aware-3d-multi-human</a>
+> **Project**: <a href="https://vcai.mpi-inf.mpg.de/projects/scene-aware-3d-multi-human/" target="_blank">https://vcai.mpi-inf.mpg.de/projects/scene-aware-3d-multi-human</a><br>
 > **Code**: [https://github.com/dluvizon/scene-aware-3d-multi-human](https://github.com/dluvizon/scene-aware-3d-multi-human)
 
 <div align="center">
@@ -52,13 +52,13 @@ Note that some packages in `environment.yml` are only needed for visualizations.
 We use the SMPL model that can be downloaded from [ [here](https://smpl.is.tue.mpg.de/) ]. Download the file `SMPL_NEUTRAL.pkl` and place it at `model_data/parameters`.
 
 ### 1.3 Pre-processing and Image Predictors
-_<This step is only required for [predictions from new videos](#predictions-from-new-videos)>_
+_<This step is only required for [predictions from new videos](#3-predictions-from-new-videos)>_
 
 Our method relies on four different predictors as input data modalities. Please follow the **optional instructions** [ [here](doc/external_tools.md) ] to install and setup each predictor. **As an alternative**, one could also install the predictors by their own. Here is a list of each predictor that we use:
-  - Monocular Depth Estimation: [MiDaS/DPT]()
-  - 2D Human Pose Estimation and Tracking: [AlphaPose]()
-  - Initial SMPL Parameters: [ROMP]()
-  - Instance Segmentation: [Mask2Former]()
+  - Monocular Depth Estimation: [MiDaS/DPT](https://github.com/isl-org/DPT)
+  - 2D Human Pose Estimation and Tracking: [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
+  - Initial SMPL Parameters: [ROMP](https://github.com/Arthur151/ROMP)
+  - Instance Segmentation: [Mask2Former](https://github.com/facebookresearch/Mask2Former)
 
 All the predictors are independent and can be installed and executed in parallel. Note that all these predictors are not part of our software distribution, although we provide [simplified instructions](doc/external_tools.md) on how to install and adapt, if necessary.
 

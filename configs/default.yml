@@ -1,0 +1,39 @@
+ARGS:
+  experiment: 'Predict Internet'
+  debug: True
+
+  gpu: 0
+  batch_size: 10
+  num_workers: 4
+
+  resize_factor: 0.125 # 1/4
+  erode_segmentation_iters: 0
+  erode_backmask_iters: 5
+  renormalize_depth: True
+  post_process_depth: True
+  shuffle: True
+
+  num_iter: 250
+  proj2d_loss_coef: 1.0
+  depth_loss_coef: 0.05
+  silhouette_loss_coef: 0.1
+  reg_poses_coef: 0.002
+  reg_scales_coef: 0.0001
+  reg_velocity_coef: 0.05
+  reg_verts_filter_coef: 0.002
+  reg_contact_coef: 0.001
+  reg_foot_sliding_coef: 0.01
+
+  save_visualizations: True
+
+smpl:
+  smpl_model_parameters_path: './model_data/parameters'
+
+data:
+  data_path: './data/input_video/'
+  depth_path: 'DPT_large_monodepth' #'DPT_hybrid_monodepth' #'DPT_midas21_monodepth'
+  joint_confidence_thr: 0.5
+  use_hrnet_pose: False
+  start_frame: 0
+  end_frame: -1
+  step_frame: 1

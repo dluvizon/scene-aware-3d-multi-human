@@ -1,0 +1,146 @@
+diff --git a/run_monodepth.py b/run_monodepth.py
+index 010a322..cfa23ba 100644
+--- a/run_monodepth.py
++++ b/run_monodepth.py
+@@ -17,7 +17,8 @@ from dpt.transforms import Resize, NormalizeImage, PrepareForNet
+ #from util.misc import visualize_attention
+ 
+ 
+-def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=True):
++def run(input_path, output_path, model_path,
++        net_w=None, net_h=None, model_type="dpt_hybrid", optimize=True):
+     """Run MonoDepthNN to compute depth maps.
+ 
+     Args:
+@@ -33,7 +34,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+ 
+     # load network
+     if model_type == "dpt_large":  # DPT-Large
+-        net_w = net_h = 384
++        if (net_w is None) or (net_h is None):
++            net_w = net_h = 384
+         model = DPTDepthModel(
+             path=model_path,
+             backbone="vitl16_384",
+@@ -42,7 +44,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+         )
+         normalization = NormalizeImage(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+     elif model_type == "dpt_hybrid":  # DPT-Hybrid
+-        net_w = net_h = 384
++        if (net_w is None) or (net_h is None):
++            net_w = net_h = 384
+         model = DPTDepthModel(
+             path=model_path,
+             backbone="vitb_rn50_384",
+@@ -51,8 +54,9 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+         )
+         normalization = NormalizeImage(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+     elif model_type == "dpt_hybrid_kitti":
+-        net_w = 1216
+-        net_h = 352
++        if (net_w is None) or (net_h is None):
++            net_w = 1216
++            net_h = 352
+ 
+         model = DPTDepthModel(
+             path=model_path,
+@@ -66,8 +70,9 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+ 
+         normalization = NormalizeImage(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+     elif model_type == "dpt_hybrid_nyu":
+-        net_w = 640
+-        net_h = 480
++        if (net_w is None) or (net_h is None):
++            net_w = 640
++            net_h = 480
+ 
+         model = DPTDepthModel(
+             path=model_path,
+@@ -81,7 +86,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+ 
+         normalization = NormalizeImage(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+     elif model_type == "midas_v21":  # Convolutional model
+-        net_w = net_h = 384
++        if (net_w is None) or (net_h is None):
++            net_w = net_h = 384
+ 
+         model = MidasNet_large(model_path, non_negative=True)
+         normalization = NormalizeImage(
+@@ -117,7 +123,7 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+     model.to(device)
+ 
+     # get input
+-    img_names = glob.glob(os.path.join(input_path, "*"))
++    img_names = glob.glob(os.path.join(input_path, "*.jpg"))
+     num_images = len(img_names)
+ 
+     # create output folder
+@@ -149,18 +155,20 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
+                 sample = sample.to(memory_format=torch.channels_last)
+                 sample = sample.half()
+ 
+-            prediction = model.forward(sample)
+-            prediction = (
+-                torch.nn.functional.interpolate(
+-                    prediction.unsqueeze(1),
+-                    size=img.shape[:2],
+-                    mode="bicubic",
+-                    align_corners=False,
+-                )
+-                .squeeze()
+-                .cpu()
+-                .numpy()
+-            )
++            prediction = model.forward(sample).squeeze().cpu().numpy()
++            #prediction = model.forward(sample)
++            #prediction = (
++            #    torch.nn.functional.interpolate(
++            #        prediction.unsqueeze(1),
++            #        size=img.shape[:2],
++            #        mode="bicubic",
++            #        align_corners=False,
++            #    )
++            #    .squeeze()
++            #    .cpu()
++            #    .numpy()
++            #)
++
+ 
+             if model_type == "dpt_hybrid_kitti":
+                 prediction *= 256
+@@ -194,6 +202,13 @@ if __name__ == "__main__":
+         "-m", "--model_weights", default=None, help="path to model weights"
+     )
+ 
++    parser.add_argument(
++        "--net_w", type=int, default=384, help="CNN width"
++    )
++    parser.add_argument(
++        "--net_h", type=int, default=384, help="CNN height"
++    )
++
+     parser.add_argument(
+         "-t",
+         "--model_type",
+@@ -233,6 +248,8 @@ if __name__ == "__main__":
+         args.input_path,
+         args.output_path,
+         args.model_weights,
++        args.net_w,
++        args.net_h,
+         args.model_type,
+         args.optimize,
+     )
+diff --git a/util/io.py b/util/io.py
+index 19559da..8b18a4a 100644
+--- a/util/io.py
++++ b/util/io.py
+@@ -175,7 +175,7 @@ def write_depth(path, depth, bits=1, absolute_depth=False):
+         path (str): filepath without extension
+         depth (array): depth
+     """
+-    write_pfm(path + ".pfm", depth.astype(np.float32))
++    #write_pfm(path + ".pfm", depth.astype(np.float32))
+ 
+     if absolute_depth:
+         out = depth

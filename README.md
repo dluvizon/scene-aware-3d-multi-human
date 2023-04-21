@@ -172,7 +172,7 @@ Please cite our paper if this software (including any part of it) is useful for 
 
 ## License
 
-***REMOVED***
+Please see the License Terms in the [LICENSE](./LICENSE) file.
 
 
 ## Acknowledgment

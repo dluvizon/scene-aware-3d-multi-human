@@ -160,12 +160,14 @@ Type "n" to jump to the next frame and "u" to see it from the camera perspective
 
 Please cite our paper if this software (including any part of it) is useful for you.
 ```bibtex
-@misc{SceneAware_EG2023,
+@article{SceneAware_EG2023,
   title = {{Scene-Aware 3D Multi-Human Motion Capture from a Single Camera}},
   author = {Luvizon, Diogo and Habermann, Marc and Golyanik, Vladislav and Kortylewski, Adam and Theobalt, Christian},
-  doi = {10.48550/ARXIV.2301.05175},
-  url = {https://arxiv.org/abs/2301.05175},
-  publisher = {arXiv},
+  journal = {Computer Graphics Forum},
+  volume = {42},
+  number = {2},
+  pages = {371-383},
+  doi = {https://doi.org/10.1111/cgf.14768},
   year = {2023},
 }
 ```
